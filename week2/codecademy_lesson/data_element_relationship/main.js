@@ -25,4 +25,8 @@ function show_video_data(d) {
 
 divSelection
   .data(videoData)
+  .attr("class", "bar")
+  .style("width", function(d) {
+    return d.amount * 50 + "px";
+  })
   .text(show_video_data);
