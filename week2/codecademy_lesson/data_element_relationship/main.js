@@ -19,6 +19,10 @@ let divSelection = d3.select("body")
   .selectAll("div");
 
 //Add your code here:
+function show_video_data(d) {
+  return d.title + ": " + d.amount + " views"
+}
+
 divSelection
   .data(videoData)
-  .text(function(d) {return d});
+  .text(show_video_data);
