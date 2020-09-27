@@ -24,11 +24,11 @@ function show_video_data(d) {
 }
 
 divSelection
-  .data(videoData)
-  .enter() // compute elements to append
+    .data(videoData)
+    .enter() // compute elements to append
   .append('div') // append elements as divs
-  .text(show_video_data)
-  .attr("class", "bar")
-  .style("width", function(d) {
-    return d.amount * 50 + "px";
-  });
+    .text(show_video_data)
+    .attr("class", "bar")
+    .style("width", function(d) {
+      return d.amount * 50 + "px";
+    });
