@@ -2,14 +2,14 @@ var a_data = []
 for (var i = 0; i < 30; i++) {
   x_val = Math.random() * (70) + 111
   y_val = Math.random() * (70) + 111
-  a_data[a_data.length] =  [x_val, y_val, "#69b3a2"];
+  a_data[a_data.length] =  [x_val, y_val, "#FF0000"];
 }
 
 var b_data = []
 for (var i = 0; i < 30; i++) {
   x_val = Math.random() * (50) + 50
   y_val = Math.random() * (50) + 50
-  b_data[b_data.length] = [x_val, y_val, "#cccccc"];
+  b_data[b_data.length] = [x_val, y_val, "#0000FF"];
 }
 data = a_data.concat(b_data);
 console.log(data);
