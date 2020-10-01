@@ -19,7 +19,7 @@ var svg = d3.select("#viz")
             .attr("height", 300);
 
 svg.selectAll("circle")
-   .data(data).enter()
+   .data(a_data).enter()
   .append("circle")
    .attr("cx", function(d) {return d[0]})
    .attr("cy", function(d) {return d[1]})
@@ -27,3 +27,16 @@ svg.selectAll("circle")
    .style("fill", function (d) {
      return d[2]
    } );
+
+svg.selectAll("rect")
+.data(b_data)
+.enter().append('rect')
+    .attr('x', function(d) {return d[0]})
+    .attr('y', function(d) {return d[1]})
+    .attr('width', 7)
+    .attr('height', 7)
+    .attr('rx', 1)
+    .attr('ry', 1)
+    .style('fill', function (d) {
+      return d[2]
+    } );
