@@ -10,15 +10,44 @@
         width:250px;
         height:250px;
         border: 1px solid #CC1111;
-        
+
     }
-    .bar{
-        background-color: #DD1111;
+    .bar {
+          fill: #DD1111;
+      }
+    ul {
+      list-style: none;
+      margin: 3rem auto;
+      padding: 1rem;
+      width: 100px;
+    }
+    li {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+      margin: 1rem 0;
+      padding: 0.5rem;
+    }
+    .added {
+      background-color: lightgreen;
+
+    }
+    .redun {
+      background-color: lightcoral;
+    }
+    .udpated {
+      background-color: orange;
     }
 </style>
 </head>
 <body>
-<div></div>
-<svg></svg>
+  <table>
+  <tr>
+    <td>
+      <svg class="container"></svg>
+    </td>
+    <td>
+      <ul id="mylist"></ul>
+    </td>
+</tr>
+</table>
 </body>
 </html>
