@@ -34,11 +34,24 @@ g.append("g")
 .attr("transform","translate(0,"+height+")")
 .call(d3.axisBottom(xScale));
 
+var div = d3.select("body").append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0);
 
 g.append("g")
 .call(d3.axisLeft(yScale));
 
 function onMouseOver(d,i) {
+
+  //Makes the new div appear on hover:
+  div.transition()
+      .duration(200)
+      .style("opacity", .9);
+  let num = this.__data__.val.toString();
+  div.html(num)
+      .style("left", (this.pageX + 10) + "px")
+      .style("top", (this.pageY - 15) + "px");
+
   d3.select(this)
     .attr('class','highlight');
 
@@ -50,21 +63,30 @@ function onMouseOver(d,i) {
   .attr("height", (d)=>height-yScale(d.val)+10);
 
   console.log(this.__data__.year);
+  console.log('d',d);
   var other_bars = data.filter((el)=>el.val < this.__data__.val)
   console.log(other_bars);
   d3.selectAll(".bar")
-    .data(other_bars)
+    .data(other_bars, d=>d.val)
     .transition()
     .duration(500)
     .attr("width", xScale.bandwidth())
     .attr("y", (d)=>yScale(d.val)-10)
     .attr("height", (d)=>height-yScale(d.val))
     .attr("class", "smaller_bars");
+
+
 }
 
 function onMouseOut(d,i) {
+  //Makes the new div disappear:
+  div.transition()
+       .duration('50')
+       .style("opacity", 0);
+
   d3.select(this)
   .attr('class','bar');
+
 
   d3.select(this)
   .transition()
@@ -76,14 +98,17 @@ function onMouseOut(d,i) {
   var other_bars = data.filter((el)=>el.val < this.__data__.val)
   console.log(other_bars);
   d3.selectAll(".bar,.smaller_bars")
-    .data(other_bars, data=>data.val)
+    .data(data, d=>d.val)
     .transition()
     .duration(500)
     .attr("width", xScale.bandwidth())
     .attr("y", (d)=>yScale(d.val))
     .attr("height", (d)=>height-yScale(d.val))
     .attr("class", "bar");
+
+
 }
+
 
 
 g.selectAll(".bar")
