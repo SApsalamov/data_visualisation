@@ -17,3 +17,7 @@ path: week4/
 Assignment 4 - Majilis  
 path: week6_majilis_vis/  
 ![Week6 Majilis](imgs/majilis.png "Week6 Majilis")
+
+Assignment 5 - WordNet   
+path: week8_wordNet_vis/  
+![Week8 WordNet](imgs/word_net.png "Week8 WordNet")
