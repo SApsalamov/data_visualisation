@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<script src="https://d3js.org/d3.v4.js"></script>
+<style>
+.legend{
+        color:blue;
+}
+</style>
+</head>
+<body>
+  <div id="my_dataviz"></div>
+  <script>
+    var margin = {top:20,right:20,bottom:20,left:20},
+    width = 2000 - margin.left - margin.right;
+    height = 1000 - margin.top - margin.bottom;
+
+    var svg = d3.select("#my_dataviz")
+      .append("svg")
+      .attr("width", width+margin.left+margin.right)
+      .attr("height", height+margin.top+margin.bottom)
+      .append("g")
+      .attr("tranform","translate("+margin.left+","+margin.top+")");
+    console.log(margin);
+
+    d3.json("wordnet_syn_hyp.json", (data)=>{
+      console.log(data);
+
+    var gnode = svg
+        .selectAll("g")
+        .data(data.node)
+        .enter()
+        .append("g")
+
+    var node = gnode
+      .append("circle")
+        .attr("r",20)
+        .attr("cx",50)
+        .attr("cy",50)
+        .attr('fill', '#AA1111');
+
+      node_text =  gnode
+        .append("text")
+        .text(d=>d.name)
+        .attr('fill', '#38b509')
+        .attr('font-weight', 'bold');
+
+
+      var link = svg
+        .selectAll("line")
+        .data(data.edge)
+        .enter()
+        .append("line")
+        .style("stroke",function(d) {
+          console.log(d.rel);
+          if (d.rel == 'synonym'){
+            return "#11AA11";
+          } else if (d.rel == 'hyperonym') {
+            return "#0987b5";
+          }
+
+        });
+
+
+
+      var simulation = d3.forceSimulation(data.node)
+        .force("link", d3.forceLink()
+        .id((d) => d.id)
+        .links(data.edge)
+        )
+        .force("charge", d3.forceManyBody().strength(-250))
+        .force("center", d3.forceCenter(width / 2, height / 2))
+        .on("end",ticked);
+
+        function ticked() {
+          link
+            .attr("x1", function (d) { return d.source.x; } )
+            .attr("y1", function (d) { return d.source.y; } )
+            .attr("x2", function (d) { return d.target.x; } )
+            .attr("y2", function (d) { return d.target.y; } );
+
+          node
+          .attr("cx", function(d) {return d.x+5})
+          .attr("cy",function(d) {return d.y+5});
+
+          node_text
+          .attr("x", function(d) {return d.x+5})
+          .attr("y",function(d) {return d.y+5});
+
+        }
+
+var legend = svg.selectAll(".legend")
+  .data(d3.map(data.edge, function(d){return d.rel;}).keys())
+  .enter().append("g")
+  .attr("class","legend")
+  .attr("transform",function(d,i) {return "translate(0,"+i*20+")";});
+
+  legend.append("rect")
+  .attr("x",width-18)
+  .attr("width",18)
+  .attr("height",18)
+  .style("fill",function(d) {
+
+    if (d == 'synonym'){
+      return "#11AA11";
+    } else if (d == 'hyperonym') {
+      return "#0987b5";
+    }
+
+  });
+
+  legend.append("text")
+  .attr("x", width-24)
+  .attr("y", 9)
+  .attr("dy",".35em")
+  .style("text-anchor","end")
+  .text(function(d) {return d;});
+    });
+  </script>
+</body>
+</html>
